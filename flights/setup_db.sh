@@ -28,19 +28,13 @@ INSERT INTO flights (origin_airport, destination_airport, airline, flight_number
         TAIL_NUMBER,
         CAST(DEPARTURE_DELAY AS REAL)
     FROM flights_raw;
-EOF
 
-
-sqlite3 airlines.db <<EOF
 
 DROP TABLE IF EXISTS airlines;
 
 .mode csv
 .import airlines.csv airlines
-EOF
 
-
-sqlite3 airports.db <<EOF
 
 DROP TABLE IF EXISTS airports;
 
