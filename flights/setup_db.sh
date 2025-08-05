@@ -21,13 +21,13 @@ CREATE TABLE flights (
     );
 
 INSERT INTO flights (origin_airport, destination_airport, airline, flight_number, tail_number, scheduled_departure, departure_delay)
-    SELECT
+    SELECT DISTINCT
         ORIGIN_AIRPORT,
         DESTINATION_AIRPORT,
         AIRLINE,
         CAST(FLIGHT_NUMBER AS INTEGER),
         TAIL_NUMBER,
-        printf('%4d-%02d-%02d %02d-%02d-00', CAST(YEAR AS INTEGER), CAST(MONTH AS INTEGER), CAST(DAY AS INTEGER), CAST(SCHEDULED_DEPARTURE AS INTEGER) / 100, CAST(SCHEDULED_DEPARTURE AS INTEGER) % 100),
+        printf('%4d-%02d-%02d %02d:%02d:00', CAST(YEAR AS INTEGER), CAST(MONTH AS INTEGER), CAST(DAY AS INTEGER), CAST(SCHEDULED_DEPARTURE AS INTEGER) / 100, CAST(SCHEDULED_DEPARTURE AS INTEGER) % 100),
         CAST(DEPARTURE_DELAY AS REAL)
     FROM flights_raw;
 
@@ -38,6 +38,7 @@ DROP TABLE IF EXISTS airlines;
 .import airlines.csv airlines
 
 
+DROP TABLE IF EXISTS airports_raw;
 DROP TABLE IF EXISTS airports;
 
 .mode csv
